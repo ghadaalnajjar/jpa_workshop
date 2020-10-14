@@ -1,5 +1,6 @@
 package se.lexicon.jpa_workshop.entity;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +10,22 @@ import java.util.Objects;
  * Created by Mehrdad Javan
  * Date: Oct, 2020
  */
+@Entity
 public class ProductOrder {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productOrderId;
     private LocalDateTime orderDateTime;
+
+    @OneToMany(fetch = FetchType.EAGER,
+            mappedBy = "productOrder",
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+            orphanRemoval = true
+    )
     private List<OrderItem> orderItems;
+
+    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "appUser_id")
     private AppUser customer;
 
     public ProductOrder() {

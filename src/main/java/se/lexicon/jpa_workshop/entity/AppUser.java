@@ -1,13 +1,20 @@
 package se.lexicon.jpa_workshop.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 
 /**
  * Created by Mehrdad Javan
  * Date: Oct, 2020
  */
-public class AppUser {
 
+@Entity
+public class AppUser {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int appUserId;
     private String firstName;
     private String lastName;

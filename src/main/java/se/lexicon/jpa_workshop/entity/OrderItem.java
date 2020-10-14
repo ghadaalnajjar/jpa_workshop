@@ -1,15 +1,28 @@
 package se.lexicon.jpa_workshop.entity;
 
+import org.hibernate.annotations.Fetch;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
  * Created by Mehrdad Javan
  * Date: Oct, 2020
  */
+@Entity
 public class OrderItem {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
     private int quantity;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id")
     private Product product;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "productOrder_id")
     private ProductOrder productOrder;
 
     public OrderItem() {
